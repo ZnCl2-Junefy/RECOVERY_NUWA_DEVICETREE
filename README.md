@@ -36,10 +36,14 @@ Works:
 ## To use it:
 
 同步你的RECOVERY源码
+
 cd 到源码根目录
+
 git clone https://github.com/ZnCl2-Junefy/RECOVERY_NUWA_DEVICETREE \
           ./device/xiaomi/nuwa
+          
 BOARD_CONF=./device/xiaomi/nuwa/BoardConfig.mk
+
 if grep -q BOARD_PLAT_PUBLIC_SEPOLICY_DIR "$BOARD_CONF"; then
     echo "==>  patching BoardConfig.mk to remove deprecated sepolicy warnings"
     sed -i 's/BOARD_PLAT_PUBLIC_SEPOLICY_DIR/SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS/g' "$BOARD_CONF"
@@ -48,6 +52,11 @@ fi
 source build/envsetup.sh
 lunch twrp_nuwa-eng
 mka recoveryimage -j"$(nproc)"
-等待编译完成，之后使用https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn刷入
+
+
+等待编译完成，之后使用Google Android Platform Tools
+https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn
+
+执行
 fastboot flash recovery_ab out/target/product/nuwa/recovery.img
 
