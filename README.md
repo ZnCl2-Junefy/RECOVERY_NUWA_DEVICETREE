@@ -45,12 +45,18 @@ git clone https://github.com/ZnCl2-Junefy/RECOVERY_NUWA_DEVICETREE \
 BOARD_CONF=./device/xiaomi/nuwa/BoardConfig.mk
 
 if grep -q BOARD_PLAT_PUBLIC_SEPOLICY_DIR "$BOARD_CONF"; then
+
     echo "==>  patching BoardConfig.mk to remove deprecated sepolicy warnings"
+    
     sed -i 's/BOARD_PLAT_PUBLIC_SEPOLICY_DIR/SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS/g' "$BOARD_CONF"
+    
     sed -i 's/BOARD_PLAT_PRIVATE_SEPOLICY_DIR/SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS/g' "$BOARD_CONF"
+    
 fi
 source build/envsetup.sh
+
 lunch twrp_nuwa-eng
+
 mka recoveryimage -j"$(nproc)"
 
 
